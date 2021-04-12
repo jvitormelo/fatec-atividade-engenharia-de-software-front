@@ -1,0 +1,9 @@
+#image {
+    background-image: url("https://842930.smushcdn.com/1760858/wp-content/uploads/2020/06/sunshine-15-sign-in.png?lossy=1&strip=1&webp=1");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 200px;
+    mix-blend-mode: multiply;
+}
