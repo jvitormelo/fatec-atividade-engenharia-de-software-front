@@ -1,29 +1,36 @@
-import React, { useEffect, useState } from 'react'
-import { useUserContext } from '../../context/authorization'
-import { Meta } from '../../layout/Meta'
-import { Main } from '../../templates/Main'
-import SignInResource from '../../resources/SignInResource'
-import { useRouter } from 'next/router'
+import React, { useState } from 'react';
+
+import { useRouter } from 'next/router';
+
+// @ts-ignore
+import { useLoadingContext, useUserContext } from '../../context/user';
+import { Meta } from '../../layout/Meta';
+import SignInResource from '../../resources/SignInResource';
+import { Main } from '../../templates/Main';
 
 const Login = () => {
-  const router = useRouter()
+  const { setLoading } = useLoadingContext();
+  const userContext = useUserContext();
+  const router = useRouter();
+
   const [user, setUser] = useState({
     email: '',
-    password: ''
-  })
-  const UserContext = useUserContext()
-  useEffect(() => {
-  }, [])
+    password: '',
+  });
 
-  async function handleLogin () {
-    const response = await SignInResource.login(user)
-    if (!response.error) {
-      const { data } = response
-      UserContext.setUser((oldValue: any) => ({ ...oldValue, isAdmin: data.user.isAdmin }))
-      localStorage.setItem('token', data.token)
-      router.push('dashboard')
-    } else {
-      console.log('Problema ao logar')
+  async function handleLogin() {
+    try {
+      setLoading((oldValue: any) => ({ ...oldValue, active: true }));
+      const response = await SignInResource.login(user);
+      if (!response.error) {
+        const { data } = response;
+        userContext.setUser((oldValue: any) => ({ ...oldValue, isAdmin: data.user.isAdmin }));
+        localStorage.setItem('token', data.token);
+        return router.push('dashboard');
+      }
+      return null;
+    } finally {
+      setLoading((oldValue: any) => ({ ...oldValue, active: false }));
     }
   }
 
@@ -53,13 +60,16 @@ const Login = () => {
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, sunt.
               </p>
             </div>
-            <form className="mt-12" onSubmit={event => {
-              event.preventDefault()
-              handleLogin()
-            }}>
+            <form
+              className="mt-12"
+              onSubmit={(event) => {
+                event.preventDefault();
+                handleLogin();
+              }}
+            >
               <div>
                 <input
-                  onChange={(change) => setUser((oldValue) => ({ ...oldValue, email: change.target.value })) }
+                  onChange={(change) => setUser((oldValue) => ({ ...oldValue, email: change.target.value }))}
                   className="bg-gray-300 rounded-md h-14 w-full placeholder-gray-600 pl-4 outline-none focus:bg-gray-400 transition-colors"
                   placeholder="E-mail"
                   type="mail"
@@ -67,7 +77,7 @@ const Login = () => {
               </div>
               <div className="mt-4">
                 <input
-                  onChange={(change) => setUser((oldValue) => ({ ...oldValue, password: change.target.value })) }
+                  onChange={(change) => setUser((oldValue) => ({ ...oldValue, password: change.target.value }))}
                   className="bg-gray-300 rounded-md h-14 w-full placeholder-gray-600 pl-4 outline-none focus:bg-gray-400 transition-colors"
                   placeholder="Senha"
                   type="password"
@@ -86,7 +96,7 @@ const Login = () => {
         </div>
       </div>
     </Main>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

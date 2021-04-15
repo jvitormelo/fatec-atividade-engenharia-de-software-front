@@ -1,25 +1,21 @@
-import AbstractResource from './AbstractResource'
+import AbstractResource from './AbstractResource';
 
 class UserResource extends AbstractResource {
-  index () {
-
-  }
-
-  async find (id: string | number) {
+  async find(id: string | number) {
     try {
-      const response = await this.api.get(`/users/${id}`)
+      const response = await this.api.get(`/users/${id}`);
       return {
         error: false,
         data: response?.data?.response || {},
-        response
-      }
+        response,
+      };
     } catch (e) {
       return {
         error: true,
         data: {},
-        response: e
-      }
+        response: e,
+      };
     }
   }
 }
-export default new UserResource()
+export default new UserResource();

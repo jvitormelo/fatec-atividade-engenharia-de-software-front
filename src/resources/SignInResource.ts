@@ -1,27 +1,27 @@
-import AbstractResource from './AbstractResource'
+import AbstractResource from './AbstractResource';
 
 interface Login {
-  email:string,
-  password:string
+  email: string;
+  password: string;
 }
 
 class SignInResource extends AbstractResource {
-  async login (payload:Login) {
+  async login(payload: Login) {
     try {
-      const response = await this.api.post('/public/login', payload)
+      const response = await this.api.post('/public/login', payload);
       return {
         error: false,
         data: response?.data?.response || {},
-        response
-      }
+        response,
+      };
     } catch (e) {
       return {
         error: true,
         data: {},
-        response: e
-      }
+        response: e,
+      };
     }
   }
 }
 
-export default new SignInResource()
+export default new SignInResource();
