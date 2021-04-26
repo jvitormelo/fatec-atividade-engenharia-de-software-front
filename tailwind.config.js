@@ -1,3 +1,4 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
   purge: ['./src/**/*.{js,ts,jsx,tsx}'],
   darkMode: false,
@@ -38,6 +39,10 @@ module.exports = {
           800: '#2c5282',
           900: '#2a4365',
         },
+      },
+      screens: {
+        xs: '600px',
+        ...defaultTheme.screens,
       },
     },
   },

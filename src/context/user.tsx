@@ -5,6 +5,7 @@ const User = createContext({});
 export function useUserContext() {
   // @ts-ignore
   const { user, setUser } = useContext(User);
+
   return {
     user,
     setUser,
@@ -13,9 +14,16 @@ export function useUserContext() {
 export function useLoadingContext() {
   // @ts-ignore
   const { loading, setLoading } = useContext(User);
+  function openLoading() {
+    setLoading((oldValue: any) => ({ ...oldValue, active: true }));
+  }
+  function closeLoading() {
+    setLoading((oldValue: any) => ({ ...oldValue, active: false }));
+  }
   return {
+    openLoading,
+    closeLoading,
     loading,
-    setLoading,
   };
 }
 
@@ -25,7 +33,7 @@ export default function UserProvider({ children }: any) {
     name: '',
   });
 
-  const [loading, setLoading] = useState({ active: false, message: '' });
+  const [loading, setLoading] = useState({ active: false });
 
   return (
     // @ts-ignore

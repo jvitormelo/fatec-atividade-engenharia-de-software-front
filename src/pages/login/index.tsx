@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -9,9 +9,18 @@ import SignInResource from '../../resources/SignInResource';
 import { Main } from '../../templates/Main';
 
 const Login = () => {
-  const { setLoading } = useLoadingContext();
+  const { openLoading, closeLoading } = useLoadingContext();
   const userContext = useUserContext();
   const router = useRouter();
+
+  function handleAlreadyLogged() {
+    if (localStorage.getItem('token')) return router.push('/dashboard/home/');
+    return null;
+  }
+
+  useEffect(() => {
+    handleAlreadyLogged();
+  });
 
   const [user, setUser] = useState({
     email: '',
@@ -20,17 +29,17 @@ const Login = () => {
 
   async function handleLogin() {
     try {
-      setLoading((oldValue: any) => ({ ...oldValue, active: true }));
+      openLoading();
       const response = await SignInResource.login(user);
       if (!response.error) {
         const { data } = response;
         userContext.setUser((oldValue: any) => ({ ...oldValue, isAdmin: data.user.isAdmin }));
         localStorage.setItem('token', data.token);
-        return router.push('dashboard');
+        return router.push('/dashboard/home/');
       }
       return null;
     } finally {
-      setLoading((oldValue: any) => ({ ...oldValue, active: false }));
+      closeLoading();
     }
   }
 
