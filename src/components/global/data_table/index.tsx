@@ -15,8 +15,7 @@ interface IHeaders {
 
 function DataTable({ headers, data }: IDataTable) {
   useDataTableController({ headers, data });
-  // @ts-ignore
-  // @ts-ignore
+
   return (
     <Dashboard>
       <div className="flex  rounded-lg bg-gray-200 shadow-lg content-around">

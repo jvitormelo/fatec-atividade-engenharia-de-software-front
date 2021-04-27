@@ -10,7 +10,7 @@ const DashboardHome = () => (
       <div>
         <div className="text-2xl mb-2">Ultimas matérias</div>
         <div className="lg:grid grid-cols-4 gap-3">
-          {['Programação', 'Matemática', 'Como ser uma trannie(Rust)'].map((item) => (
+          {['Programação', 'Matemática', 'teste'].map((item) => (
             <div
               key={item}
               className="p-4 bg-white animate-2s duration-150 cursor-pointer  hover:translate-y- transform hover:translate-y-1  shadow-lg hover:bg-gray-100 min-w-[10.23rem] flex justify-between items-center rounded-lg"

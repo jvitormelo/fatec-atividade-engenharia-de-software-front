@@ -4,7 +4,7 @@ import DataTable from '../../../components/global/data_table';
 import useManageUserController from './manageUserController';
 
 function ManageUsers() {
-  useManageUserController();
+  const { state } = useManageUserController();
   return (
     <div>
       <DataTable
@@ -12,12 +12,7 @@ function ManageUsers() {
           { name: 'Nome', value: 'name' },
           { name: 'É admnistrador', value: 'isAdmin' },
         ]}
-        data={[
-          { name: 'Arthur', isAdmin: true },
-          { name: 'Joao', isAdmin: true },
-          { name: '(((G)))', isAdmin: true },
-          { name: 'KYS', isAdmin: false },
-        ]}
+        data={state.users}
       />
     </div>
   );
