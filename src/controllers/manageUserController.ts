@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { useUserContext } from '../../../context/user';
-import UserResource from '../../../resources/UserResource';
+import { useUserContext } from '../context/user';
+import UserResource from '../resources/UserResource';
 
 function ManageUserController() {
   const [state, setState] = useState({

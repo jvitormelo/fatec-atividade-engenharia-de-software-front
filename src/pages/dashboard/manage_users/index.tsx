@@ -1,7 +1,7 @@
 import React from 'react';
 
 import DataTable from '../../../components/global/data_table';
-import useManageUserController from './manageUserController';
+import useManageUserController from '../../../controllers/manageUserController';
 
 function ManageUsers() {
   const { state } = useManageUserController();
