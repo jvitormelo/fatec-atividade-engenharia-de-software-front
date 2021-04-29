@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@next/bundle-analyzer": "^10.2.0",
+    "@reduxjs/toolkit": "^1.5.1",
     "@tailwindcss/jit": "^0.1.8",
     "axios": "^0.21.1",
     "next": "^10.0.9",
@@ -20,6 +21,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
+    "redux": "^4.1.0",
     "styled-jsx-plugin-postcss": "^4.0.1"
   },
   "devDependencies": {

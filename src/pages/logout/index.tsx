@@ -7,7 +7,6 @@ function Logout() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log('chamou');
     localStorage.removeItem('token');
     router.push('/').then();
   }, []);

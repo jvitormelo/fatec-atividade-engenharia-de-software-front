@@ -3,12 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 // @ts-ignore
+import { useSnackbarContext } from '../../context/snackbar';
 import { useLoadingContext, useUserContext } from '../../context/user';
 import { Meta } from '../../layout/Meta';
 import SignInResource from '../../resources/SignInResource';
+import ErrorAPI from '../../services/ErrorAPI';
 import { Main } from '../../templates/Main';
 
 const Login = () => {
+  const { setSnackbar } = useSnackbarContext();
   const { openLoading, closeLoading } = useLoadingContext();
   const userContext = useUserContext();
   const router = useRouter();
@@ -22,22 +25,27 @@ const Login = () => {
     handleAlreadyLogged();
   });
 
-  const [user, setUser] = useState({
+  const [userState, setUser] = useState({
     email: '',
     password: '',
   });
 
+  async function login() {
+    const { response, error, data } = await SignInResource.login(userState);
+    if (error) throw new ErrorAPI(response);
+    return data || {};
+  }
+
   async function handleLogin() {
     try {
       openLoading();
-      const response = await SignInResource.login(user);
-      if (!response.error) {
-        const { data } = response;
-        userContext.setUser((oldValue: any) => ({ ...oldValue, isAdmin: data.user.isAdmin }));
-        localStorage.setItem('token', data.token);
-        return router.push('/dashboard/home/');
-      }
-      return null;
+      const { token, user } = await login();
+      userContext.setUser((oldValue: any) => ({ ...oldValue, isAdmin: user.isAdmin }));
+      localStorage.setItem('token', token);
+      setSnackbar({ message: 'Logado com sucesso!', status: 'success' });
+      return router.push('/dashboard/home/');
+    } catch (e) {
+      return setSnackbar({ message: e.message, status: 'error' });
     } finally {
       closeLoading();
     }

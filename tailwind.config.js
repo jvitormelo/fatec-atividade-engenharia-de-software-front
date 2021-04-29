@@ -39,6 +39,8 @@ module.exports = {
           800: '#2c5282',
           900: '#2a4365',
         },
+        success: '#C8FAD5',
+        error: '#BB2020',
       },
       screens: {
         xs: '600px',
