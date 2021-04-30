@@ -40,9 +40,9 @@ const Login = () => {
     try {
       openLoading();
       const { token, user } = await login();
+      setSnackbar({ message: 'Logado com sucesso!', status: 'success' });
       userContext.setUser((oldValue: any) => ({ ...oldValue, isAdmin: user.isAdmin }));
       localStorage.setItem('token', token);
-      setSnackbar({ message: 'Logado com sucesso!', status: 'success' });
       return router.push('/dashboard/home/');
     } catch (e) {
       return setSnackbar({ message: e.message, status: 'error' });
