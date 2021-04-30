@@ -8,7 +8,7 @@ import UserResource from '../../resources/UserResource';
 
 const Dashboard = ({ children }: any) => {
   const { setUser, user } = useUserContext();
-  const { openLoading, closeLoading } = useLoadingContext();
+  const { openLoading, closeLoading, loading } = useLoadingContext();
   const router = useRouter();
   const routes = [{ name: 'Home', url: '/dashboard/home' }];
   const adminRoutes = [
@@ -40,6 +40,7 @@ const Dashboard = ({ children }: any) => {
   }, []);
 
   function decideRoutes(): Array<any> {
+    if (loading.active) return [];
     return user.isAdmin ? adminRoutes : routes;
   }
 
