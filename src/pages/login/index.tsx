@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 // @ts-ignore
 import { useSnackbarContext } from '../../context/snackbar';
-import { useLoadingContext, useUserContext } from '../../context/user';
+import { useLoadingContext } from '../../context/user';
 import { Meta } from '../../layout/Meta';
 import SignInResource from '../../resources/SignInResource';
 import ErrorAPI from '../../services/ErrorAPI';
@@ -13,7 +13,6 @@ import { Main } from '../../templates/Main';
 const Login = () => {
   const { setSnackbar } = useSnackbarContext();
   const { openLoading, closeLoading } = useLoadingContext();
-  const userContext = useUserContext();
   const router = useRouter();
 
   function handleAlreadyLogged() {
@@ -39,11 +38,11 @@ const Login = () => {
   async function handleLogin() {
     try {
       openLoading();
-      const { token, user } = await login();
+      const { token } = await login();
       setSnackbar({ message: 'Logado com sucesso!', status: 'success' });
-      userContext.setUser((oldValue: any) => ({ ...oldValue, isAdmin: user.isAdmin }));
+      // userContext.setUser((oldValue: any) => ({ ...oldValue, isAdmin: user.isAdmin }));
       localStorage.setItem('token', token);
-      return router.push('/dashboard/home/');
+      return await router.push('/dashboard/home/');
     } catch (e) {
       return setSnackbar({ message: e.message, status: 'error' });
     } finally {
