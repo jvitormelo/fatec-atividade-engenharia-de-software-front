@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Logout() {
   const router = useRouter();
 
@@ -10,7 +9,7 @@ function Logout() {
     localStorage.removeItem('token');
     router.push('/').then();
   }, []);
-  return <div />;
+  return <></>;
 }
 
 export default Logout;

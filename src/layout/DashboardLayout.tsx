@@ -1,49 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { useRouter } from 'next/router';
 import { ImExit } from 'react-icons/im';
 
-import { useLoadingContext, useUserContext } from '../../context/user';
-import UserResource from '../../resources/UserResource';
+import useDashboardLayoutController from '../controllers/dashboardLayoutController';
 
-const Dashboard = ({ children }: any) => {
-  const { setUser, user } = useUserContext();
-  const { openLoading, closeLoading, loading } = useLoadingContext();
-  const router = useRouter();
-  const routes = [{ name: 'Home', url: '/dashboard/home' }];
-  const adminRoutes = [
-    { name: 'Home', url: '/dashboard/home' },
-    { name: 'Gerenciar usuários', url: '/dashboard/manage_users' },
-  ];
-  const verifyAuth = () => {
-    if (!localStorage.getItem('token')) return router.push('/');
-    return null;
-  };
-
-  async function getUser() {
-    const { error, data } = await UserResource.find('0');
-    if (error) return router.push('/logout');
-    return setUser((oldValue: object) => ({ ...oldValue, ...data }));
-  }
-  async function mountHandler() {
-    try {
-      openLoading();
-      await verifyAuth();
-      await getUser();
-    } finally {
-      closeLoading();
-    }
-  }
-
-  useEffect(() => {
-    mountHandler();
-  }, []);
-
-  function decideRoutes(): Array<any> {
-    if (loading.active) return [];
-    return user.isAdmin ? adminRoutes : routes;
-  }
-
+const DashboardLayout = ({ children }: any) => {
+  const { decideRoutes, router } = useDashboardLayoutController();
   return (
     <div className="bg-gray-200 min-h-screen">
       <div className="flex min-h-screen">
@@ -79,4 +41,4 @@ const Dashboard = ({ children }: any) => {
   );
 };
 
-export default Dashboard;
+export default DashboardLayout;
