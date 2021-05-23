@@ -2,6 +2,8 @@ import React from 'react';
 
 import { AiOutlineRight } from 'react-icons/ai';
 
+import DashboardLayout from '../../../layout/DashboardLayout';
+
 const DashboardHome = () => (
   <div className="flex flex-1 flex-col">
     <div>
@@ -22,4 +24,6 @@ const DashboardHome = () => (
     </div>
   </div>
 );
+
+DashboardHome.layout = <DashboardLayout />;
 export default DashboardHome;

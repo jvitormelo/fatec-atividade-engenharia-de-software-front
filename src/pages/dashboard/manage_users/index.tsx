@@ -2,9 +2,11 @@ import React from 'react';
 
 import DataTable from '../../../components/global/data_table';
 import useManageUserController from '../../../controllers/manageUserController';
+import DashboardLayout from '../../../layout/DashboardLayout';
 
 function ManageUsers() {
   const { state } = useManageUserController();
+
   return (
     <div>
       <DataTable
@@ -18,4 +20,5 @@ function ManageUsers() {
   );
 }
 
+ManageUsers.layout = <DashboardLayout />;
 export default ManageUsers;

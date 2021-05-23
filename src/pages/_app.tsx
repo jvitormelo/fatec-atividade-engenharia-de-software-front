@@ -1,43 +1,31 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 
 // eslint-disable-next-line import/order
 import { AppProps } from 'next/app';
 
 import '../styles/main.css';
 
-import { useRouter } from 'next/router';
-
 import { Loading } from '../components/global/loading';
 import Snackbar from '../components/global/snackbar';
 import SnackbarProvider from '../context/snackbar';
 import UserProvider from '../context/user';
-import DashboardLayout from '../layout/DashboardLayout';
+
+// eslint-disable-next-line react/prop-types
+const DefaultLayout: FunctionComponent = ({ children }) => <>{children}</>;
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const router = useRouter();
-
-  if (router.pathname.includes('dashboard')) {
-    return (
-      <UserProvider>
-        <SnackbarProvider>
-          <Loading />
-          <Snackbar />
-          <DashboardLayout>
-            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <Component {...pageProps} />
-          </DashboardLayout>
-        </SnackbarProvider>
-      </UserProvider>
-    );
-  }
+  // @ts-ignore
+  const Layout = Component?.layout || DefaultLayout;
 
   return (
     <UserProvider>
       <SnackbarProvider>
         <Loading />
         <Snackbar />
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <Component {...pageProps} />
+        <Layout>
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+          <Component {...pageProps} />
+        </Layout>
       </SnackbarProvider>
     </UserProvider>
   );
