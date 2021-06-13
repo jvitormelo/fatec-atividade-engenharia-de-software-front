@@ -1,52 +1,53 @@
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 
-import { useLoadingContext, useUserContext } from '../context/user';
-import UserResource from '../resources/UserResource';
+import { useLoadingContext, useUserContext } from '../context/user'
+import UserResource from '../resources/UserResource'
 
 const dashboardLayoutController = () => {
-  const { setUser, user } = useUserContext();
-  const { openLoading, closeLoading, loading } = useLoadingContext();
-  const router = useRouter();
-  const routes = [{ name: 'Home', url: '/dashboard/home' }];
+  const { setUser, user } = useUserContext()
+  const { openLoading, closeLoading, loading } = useLoadingContext()
+  const router = useRouter()
+
+  const routes = [{ name: 'Home', url: '/dashboard/home' }, { name: 'Imagens', url: '/dashboard/images' }]
   const adminRoutes = [
     { name: 'Home', url: '/dashboard/home' },
-    { name: 'Gerenciar usuários', url: '/dashboard/manage_users' },
-  ];
+    { name: 'Gerenciar usuários', url: '/dashboard/manage_users' }
+  ]
   const verifyAuth = () => {
-    if (!localStorage.getItem('token')) return router.push('/');
-    return null;
-  };
-
-  async function getUser() {
-    const { error, data } = await UserResource.find('0');
-    if (error) return router.push('/logout');
-    return setUser((oldValue: object) => ({ ...oldValue, ...data }));
+    if (!localStorage.getItem('token')) return router.push('/')
+    return null
   }
-  async function mountHandler() {
+
+  async function getUser () {
+    const { error, data } = await UserResource.find(0)
+    if (error) return router.push('/logout')
+    return setUser((oldValue: any) => ({ ...oldValue, ...data }))
+  }
+  async function mountHandler () {
     try {
-      openLoading();
-      await verifyAuth();
-      await getUser();
+      openLoading()
+      await verifyAuth()
+      await getUser()
     } finally {
-      closeLoading();
+      closeLoading()
     }
   }
 
-  function decideRoutes(): Array<any> {
-    if (loading.active) return [];
-    return user.isAdmin ? adminRoutes : routes;
+  function decideRoutes (): Array<any> {
+    if (loading.active) return []
+    return user.isAdmin ? adminRoutes : routes
   }
 
   useEffect(() => {
-    mountHandler();
-  }, []);
+    mountHandler()
+  }, [])
 
   return {
     decideRoutes,
-    router,
-  };
-};
+    router
+  }
+}
 
-export default dashboardLayoutController;
+export default dashboardLayoutController

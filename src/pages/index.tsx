@@ -1,222 +1,74 @@
-import React from 'react';
+import React from 'react'
 
-import { useRouter } from 'next/router';
-
-import { Meta } from '../layout/Meta';
-import { Main } from '../templates/Main';
+import { Meta } from '../layout/Meta'
+import { Main } from '../templates/Main'
+import { Navbar } from '../components/home/navbar'
+import { TechCard } from '../components/home/tech_card'
+import { Modal } from '../components/global/modal'
+import { CreateAccount } from '../components/home/create_account'
+import { useHomeController } from '../controllers/useHomeController'
 
 const Index = () => {
-  const router = useRouter();
+  const { state, setState } = useHomeController()
 
   return (
     <Main
       meta={(
         <Meta
-          title="Next.js Boilerplate Presentation"
-          description="Next js Boilerplate is the perfect starer code for your project. Build your React application with Next.js framework."
+          title='Home'
+          description='Trabalho para sexta que vem'
         />
       )}
     >
-      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-      <img
-        onClick={() => router.push('/login')}
-        src={`${process.env.baseUrl}/assets/images/nextjs-starter-banner.png`}
-        alt="Nextjs starter banner"
-      />
-      <h1 className="font-bold text-2xl">
-        Boilerplate code for your Nextjs project with Tailwind CSS
-      </h1>
-      <p>
-        <span role="img" aria-label="rocket">
-          🚀
-        </span>
-        {' '}
-        Next.js Boilerplate is a starter code for your Next js project by putting developer
-        experience first .
-        {' '}
-        <span role="img" aria-label="zap">
-          ⚡️
-        </span>
-        {' '}
-        Made with
-        {' '}
-        <a href="https://nextjs.org" rel="nofollow">
-          Next.js
-        </a>
-        ,
-        {' '}
-        <a href="https://eslint.org" rel="nofollow">
-          ESLint
-        </a>
-        ,
-        {' '}
-        <a href="https://prettier.io" rel="nofollow">
-          Prettier
-        </a>
-        ,
-        {' '}
-        <a href="https://postcss.org" rel="nofollow">
-          PostCSS
-        </a>
-        ,
-        {' '}
-        <a href="https://tailwindcss.com" rel="nofollow">
-          Tailwind CSS
-        </a>
-        .
-      </p>
-      <h2 className="font-semibold text-lg">Next js Boilerplate Features</h2>
-      <p>Developer experience first:</p>
-      <ul>
-        <li>
-          <span role="img" aria-label="fire">
-            🔥
-          </span>
-          {' '}
-          <a href="https://nextjs.org" rel="nofollow">
-            Next.js
-          </a>
-          {' '}
-          for Static Site Generator
-        </li>
-        <li>
-          <span role="img" aria-label="art">
-            🎨
-          </span>
-          {' '}
-          Integrate with
-          {' '}
-          <a href="https://tailwindcss.com" rel="nofollow">
-            Tailwind CSS
-          </a>
-        </li>
-        <li>
-          <span role="img" aria-label="nail_care">
-            💅
-          </span>
-          {' '}
-          <a href="https://postcss.org" rel="nofollow">
-            PostCSS
-          </a>
-          {' '}
-          for processing
-          {' '}
-          <a href="https://tailwindcss.com" rel="nofollow">
-            Tailwind CSS
-          </a>
-        </li>
-        <li>
-          <span role="img" aria-label="tada">
-            🎉
-          </span>
-          {' '}
-          Type checking Typescript
-        </li>
-        <li>
-          <span role="img" aria-label="pencil2">
-            ✏️
-          </span>
-          {' '}
-          Linter with
-          {' '}
-          <a href="https://eslint.org" rel="nofollow">
-            ESLint
-          </a>
-        </li>
-        <li>
-          <span role="img" aria-label="hammer_and_wrench">
-            🛠
-          </span>
-          {' '}
-          Code Formatter with
-          {' '}
-          <a href="https://prettier.io" rel="nofollow">
-            Prettier
-          </a>
-        </li>
-        <li>
-          <span role="img" aria-label="fox_face">
-            🦊
-          </span>
-          {' '}
-          SEO metadata,
-          {' '}
-          <a
-            href="https://developers.google.com/search/docs/guides/intro-structured-data"
-            rel="nofollow"
-          >
-            JSON-LD
-          </a>
-          {' '}
-          and
-          {' '}
-          <a href="https://ogp.me/" rel="nofollow">
-            Open Graph
-          </a>
-          {' '}
-          tags with
-          {' '}
-          <a href="https://github.com/garmeeh/next-seo">Next SEO</a>
-        </li>
-        <li>
-          <span role="img" aria-label="rainbow">
-            🌈
-          </span>
-          {' '}
-          Include a FREE minimalist theme
-        </li>
-        <li>
-          <span role="img" aria-label="hundred">
-            💯
-          </span>
-          {' '}
-          Maximize lighthouse score
-        </li>
-      </ul>
-      <p>Built-in feature from Next.js:</p>
-      <ul>
-        <li>
-          <span role="img" aria-label="coffee">
-            ☕
-          </span>
-          {' '}
-          Minify HTML &amp; CSS
-        </li>
-        <li>
-          <span role="img" aria-label="dash">
-            💨
-          </span>
-          {' '}
-          Live reload
-        </li>
-        <li>
-          <span role="img" aria-label="white_check_mark">
-            ✅
-          </span>
-          {' '}
-          Cache busting
-        </li>
-      </ul>
-      <h2 className="font-semibold text-lg">Our Stater code Philosophy</h2>
-      <ul>
-        <li>Minimal code</li>
-        <li>SEO-friendly</li>
-        <li>
-          <span role="img" aria-label="rocket">
-            🚀
-          </span>
-          {' '}
-          Production-ready
-        </li>
-      </ul>
-      <p>
-        Check our GitHub project for more information about
-        {' '}
-        <a href="https://github.com/ixartz/Next-js-Boilerplate">Nextjs Boilerplate</a>
-        .
-      </p>
-    </Main>
-  );
-};
+      <Navbar openCreateAccount={() => setState((values) => ({ ...values, open: true }))} />
+      <div className='flex min-h-screen bg-dark-surface p-4 md:p-8 lg:p-8 flex-col '>
 
-export default Index;
+        <span className='flex justify-center text-2xl md:text-3xl lg:text-3xl text-primary-dark'>Atividade de Laboratório de Engenharia de Software</span>
+        <img
+          className='max-h-[10rem] max-w-[30.23rem] mx-auto my-8 rounded-xl'
+          alt={'nextJs'}
+          src={'https://c4.wallpaperflare.com/wallpaper/286/891/609/anime-c-programming-blue-eyes-book-cover-hd-wallpaper-preview.jpg'} />
+        <div>
+
+          <div>
+            <div className='flex  max-w-[900px] mx-auto lg:justify-around flex-col md:flex-row lg:flex-row xl:flex-row'>
+              <div>
+                <div className='flex justify-center text-3xl text-white'>Front</div>
+                <div className='flex flex-col items-center'>
+                  <TechCard
+                    img='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png'
+                    name='React' description={'Framework de JS para criar interfaces reativas.'} />
+                  <TechCard
+                    img='https://tailwindcss.com/_next/static/media/twitter-square.daf77586b35e90319725e742f6e069f9.jpg'
+                    name='Tailwind' description={'Framework de CSS para fazer a estilização.'} />
+                  <TechCard
+                    img='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Nextjs-logo.svg/1200px-Nextjs-logo.svg.png'
+                    name='NextJS' description='Framework de React para produção.' />
+                </div>
+              </div>
+              <div>
+                <div className='flex justify-center text-3xl mt-8 md:mt-0 lg:mt-0 xl:mt-0 text-white'>Back</div>
+                <div className='flex flex-col'>
+                  <TechCard img='https://cdn.iconscout.com/icon/free/png-512/node-js-1-1174935.png' name='NodeJS'
+                            description={'Runtime de JS que possibilita o JS ser rodado em server.'} />
+                  <TechCard img='https://expressjs.com/images/express-facebook-share.png'
+                            description='Framework de NodeJS para criação de API' name='Express' />
+                  <TechCard img='https://tsed.io/prisma-2.svg' name='Prisma'
+                            description='ORM para interagir com o banco Postgres' />
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <Modal closeModal={() => setState((values) => ({ ...values, open: false }))} open={state.open} >
+          <CreateAccount />
+        </Modal>
+      </div>
+
+    </Main>
+  )
+}
+
+export default Index

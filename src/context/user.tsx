@@ -1,39 +1,40 @@
-import React, { useContext, createContext, useState } from 'react';
+import React, { useContext, createContext, useState } from 'react'
 
-const User = createContext({});
+const User = createContext({})
 
-export function useUserContext() {
+export function useUserContext () {
   // @ts-ignore
-  const { user, setUser } = useContext(User);
+  const { user, setUser } = useContext(User)
 
   return {
     user,
-    setUser,
-  };
-}
-export function useLoadingContext() {
-  // @ts-ignore
-  const { loading, setLoading } = useContext(User);
-  function openLoading() {
-    setLoading((oldValue: any) => ({ ...oldValue, active: true }));
+    setUser
   }
-  function closeLoading() {
-    setLoading((oldValue: any) => ({ ...oldValue, active: false }));
+}
+export function useLoadingContext () {
+  // @ts-ignore
+  const { loading, setLoading } = useContext(User)
+  function openLoading () {
+    setLoading((oldValue: any) => ({ ...oldValue, active: true }))
+  }
+  function closeLoading () {
+    setLoading((oldValue: any) => ({ ...oldValue, active: false }))
   }
   return {
     openLoading,
     closeLoading,
-    loading,
-  };
+    loading
+  }
 }
 
-export default function UserProvider({ children }: any) {
+export default function UserProvider ({ children }: any) {
   const [user, setUser] = useState({
     idAdmin: false,
     name: '',
-  });
+    email: ''
+  })
 
-  const [loading, setLoading] = useState({ active: false });
+  const [loading, setLoading] = useState({ active: false })
 
   return (
     // @ts-ignore
@@ -42,10 +43,10 @@ export default function UserProvider({ children }: any) {
         user,
         setUser,
         loading,
-        setLoading,
+        setLoading
       }}
     >
       {children}
     </User.Provider>
-  );
+  )
 }

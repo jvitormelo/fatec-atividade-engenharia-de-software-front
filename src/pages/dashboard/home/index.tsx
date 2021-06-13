@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
-import { AiOutlineRight } from 'react-icons/ai';
+import { AiOutlineRight } from 'react-icons/ai'
 
-import DashboardLayout from '../../../layout/DashboardLayout';
+import DashboardLayout from '../../../layout/DashboardLayout'
 
 const DashboardHome = () => (
   <div className="flex flex-1 flex-col">
@@ -23,7 +23,7 @@ const DashboardHome = () => (
       </div>
     </div>
   </div>
-);
+)
 
-DashboardHome.layout = <DashboardLayout />;
-export default DashboardHome;
+DashboardHome.layout = DashboardLayout
+export default DashboardHome

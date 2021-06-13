@@ -1,21 +1,21 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react'
 
 // eslint-disable-next-line import/order
-import { AppProps } from 'next/app';
+import { AppProps } from 'next/app'
 
-import '../styles/main.css';
+import '../styles/main.css'
 
-import { Loading } from '../components/global/loading';
-import Snackbar from '../components/global/snackbar';
-import SnackbarProvider from '../context/snackbar';
-import UserProvider from '../context/user';
+import { Loading } from '../components/global/loading'
+import Snackbar from '../components/global/snackbar'
+import SnackbarProvider from '../context/snackbar'
+import UserProvider from '../context/user'
 
 // eslint-disable-next-line react/prop-types
-const DefaultLayout: FunctionComponent = ({ children }) => <>{children}</>;
+const DefaultLayout: FunctionComponent = ({ children }) => <>{children}</>
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   // @ts-ignore
-  const Layout = Component?.layout || DefaultLayout;
+  const Layout = Component?.layout || DefaultLayout
 
   return (
     <UserProvider>
@@ -28,7 +28,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         </Layout>
       </SnackbarProvider>
     </UserProvider>
-  );
-};
+  )
+}
 
-export default MyApp;
+export default MyApp
