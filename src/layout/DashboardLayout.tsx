@@ -1,26 +1,26 @@
-import React from 'react';
+import React from 'react'
 
-import { ImExit } from 'react-icons/im';
+import { ImExit } from 'react-icons/im'
 
-import useDashboardLayoutController from '../controllers/dashboardLayoutController';
-import { Main } from '../templates/Main';
-import { Meta } from './Meta';
+import useDashboardLayoutController from '../controllers/dashboardLayoutController'
+import { Main } from '../templates/Main'
+import { Meta } from './Meta'
 
 const DashboardLayout = ({ children }: any) => {
-  const { decideRoutes, router } = useDashboardLayoutController();
+  const { routes, router } = useDashboardLayoutController()
   return (
     <Main meta={<Meta title="Dashboard" description="Gerenciar" />}>
       <div className="bg-gray-200 min-h-screen">
         <div className="flex min-h-screen">
-          <div className="hidden sm:flex md:flex lg:flex xl:flex flex-shrink p-8 min-w-[15.23rem]  justify-center">
-            <div className="flex flex-col">
+          <div className="hidden sm:flex md:flex lg:flex xl:flex flex-shrink p-8 min-w-[15.23rem]  sticky top-0 left-0 justify-center">
+            <div className="flex  flex-col ">
               <div className="mb-4 text-2xl">Study Wisely</div>
               <div className="grid grid-flow-row gap-3">
-                {decideRoutes().map(({ url, name }) => (
+                {routes.map(({ url, name }) => (
                   <div
                     key={name}
                     onClick={() => router.push(url)}
-                    className="text-xl text-gray-900 cursor-pointer "
+                    className="text-xl border-2 border-[#eee] rounded-lg p-2 text-gray-900 cursor-pointer "
                   >
                     {name}
                   </div>
@@ -36,13 +36,14 @@ const DashboardLayout = ({ children }: any) => {
                 </div>
               </div>
             </div>
+
           </div>
-          <div className="sm:hidden lg:hidden md:hidden xl:hidden">Teste mobile </div>
+
           <div className="flex flex-grow bg-blue-200  p-8">{children}</div>
         </div>
       </div>
     </Main>
-  );
-};
+  )
+}
 
-export default DashboardLayout;
+export default DashboardLayout

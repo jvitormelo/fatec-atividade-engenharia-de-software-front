@@ -1,27 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import DashboardLayout from '../../../layout/DashboardLayout'
+import { useImagesController } from '../../../controllers/useImagesController'
+import { ImageCard } from '../../../components/dashboard/images/image_card'
 
 const Images = () => {
-  const [state, setState] = useState({
-    file: undefined as File | undefined | null,
-    blob: ''
-  })
-  const inputRef = useRef<HTMLInputElement>(null)
-  useEffect(() => {
-    window.addEventListener('dragover', (event) => {
-      event.preventDefault()
-    })
-    window.addEventListener('drop', (event) => {
-      event.preventDefault()
-      console.log(event.dataTransfer?.files[0])
-      setState({ file: event.dataTransfer?.files[0], blob: URL.createObjectURL(event.dataTransfer?.files[0]) })
-    })
-  }, [])
+  const { state, handleImageUpload, inputRef, setStateHandler, uploadImageHandler, removeImageHandler } = useImagesController()
 
   return (
     <div className='flex flex-col flex-grow'>
-      <div className='flex'>
-        Ultimas imagens
+      <div className='flex flex-col mb-8'>
+        <div className="text-xl">Ultimas imagens</div>
+        <div className='flex -my-2 -mx-2 flex-wrap flex-col md:flex-row lg:flex-row' >
+          {state.images.map((image) => <div className="px-2 py-2" key={image.id}><ImageCard removeImageHandler={removeImageHandler} image={image}/> </div>)}
+        </div>
       </div>
       <div className='flex flex-1 flex-grow '>
         <div className='flex flex-grow items-center justify-center'>
@@ -29,10 +20,10 @@ const Images = () => {
             {state.file
               ? <div className='flex-col flex '>
                 <div className='flex justify-center'>
-                  <button onClick={() => setState({ file: undefined, blob: '' })}
+                  <button onClick={() => setStateHandler({ file: undefined, blob: '' })}
                           className='mx-auto mb-3 px-3 py-1 bg-error text-white  rounded-lg focus:outline-none'>Remover
                   </button>
-                  <button>Salvar</button>
+                  <button className='mb-3 px-3 py-1 bg-success hover:bg-primary-dark text-black  rounded-lg focus:outline-none' onClick={uploadImageHandler}>Salvar</button>
                 </div>
 
                 <img alt={'preview'} className='min-w-[10rem] aspect-w-1 aspect-h-2' src={state.blob} />
@@ -40,13 +31,13 @@ const Images = () => {
               : <>
                 <div
                   onClick={() => inputRef.current?.click()}
-                  className='bg-gray-300 p-3 cursor-pointer rounded-lg  border-gray-400 border-4 flex items-center justify-center  min-h-[10rem]'>
+                  className='bg-white p-3 cursor-pointer rounded-lg  border-gray-400 border-4 flex items-center justify-center  min-h-[10rem]'>
                   <div className='max-w-[50%] text-center'>
                     Clique aqui para dar upload
                   </div>
 
                 </div>
-                <div className='text-center'>
+                <div className='text-center font-bold'>
                   Ou arraste a imagem
                 </div>
               </>}
@@ -54,10 +45,9 @@ const Images = () => {
 
         </div>
       </div>
-      <input ref={inputRef} type='file' onChange={(event) => setState({
-        file: event.target?.files[0] || undefined,
-        blob: URL.createObjectURL(event.target?.files[0])
-      })} className='hidden' accept={'image/jpeg'} />
+      <input ref={inputRef} type='file'
+             onChange={(event) => handleImageUpload(event.target?.files ? event.target?.files[0] : undefined)
+             } className='hidden' accept={'image/jpeg'} />
     </div>
   )
 }

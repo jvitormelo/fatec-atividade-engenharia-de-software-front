@@ -1,14 +1,15 @@
 import { useCallback } from 'react'
 import { CreateAccountInputs } from '../components/home/create_account'
-import { useLoadingContext, useUserContext } from '../context/user'
+import { useUserContext } from '../context/user'
 import UserResource from '../resources/UserResource'
 import ErrorAPI from '../services/ErrorAPI'
 import { useRouter } from 'next/router'
 import { useSnackbarContext } from '../context/snackbar'
+import { useLoadingContext } from '../context/loadingContext'
 
 export const useCreateAccountController = () => {
   const router = useRouter()
-  const { openLoading, closeLoading } = useLoadingContext()
+  const { setLoading } = useLoadingContext()
   const { setUser } = useUserContext()
   const { setSnackbar } = useSnackbarContext()
 
@@ -20,18 +21,18 @@ export const useCreateAccountController = () => {
 
   const onSubmit = useCallback(async (values:CreateAccountInputs) => {
     try {
-      openLoading()
+      setLoading(true)
       const createdUser = await createUser(values)
-      setUser((oldValue: any) => ({ ...oldValue, ...createdUser.user }))
+      setUser({ name: values.name, email: values.email, isAdmin: false })
       console.log(createdUser)
       localStorage.setItem('token', createdUser.token || '')
-      // @ts-ignore
-      setSnackbar((values: any) => ({ ...values, message: `Bem-vindo ${values.name}`, status: 'success' }))
+
+      setSnackbar(({ message: `Bem-vindo ${values.name}`, status: 'success' }))
       await router.push('/dashboard/home/')
     } catch (e) {
       console.error(e)
     } finally {
-      closeLoading()
+      setLoading(false)
     }
   }, [])
 

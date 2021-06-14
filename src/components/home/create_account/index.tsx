@@ -24,7 +24,7 @@ export const CreateAccount = () => {
         <div className='flex flex-col mt-3'><span>Nome</span>
           <input placeholder={'Nome'}
                  {...register('name', { required: true })}
-                 className='p-2 focus:outline-none  border-primary-base border-2 rounded-lg text-black border-primary-base' />
+                 className="p-4 bg-[#eee] rounded-lg focus:outline-none focus:bg-[#ddd]" />
           <span>{errors.name?.message}</span>
         </div>
 
@@ -33,7 +33,7 @@ export const CreateAccount = () => {
           <input
             {...register('email', { required: true })}
             placeholder={'Email'}
-            className='p-2 focus:outline-none border-primary-base border-2 rounded-lg text-black border-primary-base' />
+            className="p-4 bg-[#eee] rounded-lg focus:outline-none focus:bg-[#ddd]" />
           {errors.email?.message}
         </div>
         <div className='flex flex-col my-3'>
@@ -41,13 +41,12 @@ export const CreateAccount = () => {
           <input
             placeholder={'Senha'}
             {...register('password', { required: true })}
-            className='p-2 focus:outline-none  border-primary-base border-2 rounded-lg text-black border-primary-base' />
+            className="p-4 bg-[#eee] rounded-lg focus:outline-none focus:bg-[#ddd]" />
           {errors.password?.message}
         </div>
         <button
           type={'submit'}
-
-          className='p-3 block focus:outline-none animate-pulse transform duration-200 bg-primary-base mt-8 rounded-lg text-dark-elevatedSurface text-xl'>Cadastrar
+          className='bg-primary-base p-4 mt-3 rounded-lg text-secondary-gray focus:outline-none focus:bg-primary-dark'>Cadastrar
         </button>
       </form>
     </div>

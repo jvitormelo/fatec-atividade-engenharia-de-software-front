@@ -1,13 +1,4 @@
-import { useEffect } from 'react';
+const DataTableController = () => {
 
-function DataTableController({ ...props }: any) {
-  function mountHandler() {
-    console.log(props);
-  }
-  useEffect(() => {
-    mountHandler();
-  }, []);
-
-  return {};
 }
-export default DataTableController;
+export default DataTableController

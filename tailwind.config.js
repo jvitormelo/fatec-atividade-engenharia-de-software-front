@@ -66,6 +66,7 @@ module.exports = {
       },
       screens: {
         xs: '600px',
+
         ...defaultTheme.screens,
       },
     },

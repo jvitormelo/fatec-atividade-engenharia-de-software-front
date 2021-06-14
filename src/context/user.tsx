@@ -1,52 +1,46 @@
-import React, { useContext, createContext, useState } from 'react'
+import React, { createContext, Dispatch, ReactNode, useCallback, useContext, useState } from 'react'
 
-const User = createContext({})
+type TUser = {
+  isAdmin: boolean,
+  id:number,
+  name: string,
+  email: string
+}
 
-export function useUserContext () {
-  // @ts-ignore
-  const { user, setUser } = useContext(User)
+interface IUserContext {
+  state: TUser,
+  setState: Dispatch<React.SetStateAction<TUser>>
+}
+
+const User = createContext<IUserContext>({
+  state: { id: 0, email: '', isAdmin: false, name: '' },
+  setState: () => null
+})
+
+export const useUserContext = () => {
+  const { state, setState } = useContext(User)
+
+  const setUser = useCallback((user: Partial<TUser>) => {
+    setState((values) => ({ ...values, ...user }))
+  }, [state])
 
   return {
-    user,
+    user: state,
     setUser
   }
 }
-export function useLoadingContext () {
-  // @ts-ignore
-  const { loading, setLoading } = useContext(User)
-  function openLoading () {
-    setLoading((oldValue: any) => ({ ...oldValue, active: true }))
-  }
-  function closeLoading () {
-    setLoading((oldValue: any) => ({ ...oldValue, active: false }))
-  }
-  return {
-    openLoading,
-    closeLoading,
-    loading
-  }
-}
 
-export default function UserProvider ({ children }: any) {
-  const [user, setUser] = useState({
-    idAdmin: false,
+const UserProvider = ({ children }: { children: ReactNode }) => {
+  const [state, setState] = useState({
+    id: 0,
+    isAdmin: false,
     name: '',
     email: ''
   })
 
-  const [loading, setLoading] = useState({ active: false })
-
-  return (
-    // @ts-ignore
-    <User.Provider
-      value={{
-        user,
-        setUser,
-        loading,
-        setLoading
-      }}
-    >
-      {children}
-    </User.Provider>
-  )
+  return <User.Provider value={{ state, setState }}>
+    {children}
+  </User.Provider>
 }
+
+export default UserProvider

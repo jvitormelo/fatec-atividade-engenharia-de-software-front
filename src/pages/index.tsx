@@ -23,7 +23,7 @@ const Index = () => {
       <Navbar openCreateAccount={() => setState((values) => ({ ...values, open: true }))} />
       <div className='flex min-h-screen bg-dark-surface p-4 md:p-8 lg:p-8 flex-col '>
 
-        <span className='flex justify-center text-2xl md:text-3xl lg:text-3xl text-primary-dark'>Atividade de Laboratório de Engenharia de Software</span>
+        <span className='flex justify-center text-2xl md:text-3xl lg:text-3xl text-primary-dark text-center'>Atividade de Laboratório de Engenharia de Software</span>
         <img
           className='max-h-[10rem] max-w-[30.23rem] mx-auto my-8 rounded-xl'
           alt={'nextJs'}
@@ -48,7 +48,7 @@ const Index = () => {
               </div>
               <div>
                 <div className='flex justify-center text-3xl mt-8 md:mt-0 lg:mt-0 xl:mt-0 text-white'>Back</div>
-                <div className='flex flex-col'>
+                <div className='flex flex-col items-center'>
                   <TechCard img='https://cdn.iconscout.com/icon/free/png-512/node-js-1-1174935.png' name='NodeJS'
                             description={'Runtime de JS que possibilita o JS ser rodado em server.'} />
                   <TechCard img='https://expressjs.com/images/express-facebook-share.png'

@@ -1,54 +1,55 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 
-import { useSnackbarContext } from '../context/snackbar';
-import { useLoadingContext } from '../context/user';
-import SignInResource from '../resources/SignInResource';
-import ErrorAPI from '../services/ErrorAPI';
+import { useSnackbarContext } from '../context/snackbar'
+
+import SignInResource from '../resources/SignInResource'
+import ErrorAPI from '../services/ErrorAPI'
+import { useLoadingContext } from '../context/loadingContext'
 
 const loginController = () => {
-  const { setSnackbar } = useSnackbarContext();
-  const { openLoading, closeLoading } = useLoadingContext();
-  const router = useRouter();
+  const { setSnackbar } = useSnackbarContext()
+  const { setLoading } = useLoadingContext()
+  const router = useRouter()
 
   const [userState, setUser] = useState({
     email: '',
-    password: '',
-  });
+    password: ''
+  })
 
-  function handleAlreadyLogged() {
-    if (localStorage.getItem('token')) return router.push('/dashboard/home/');
-    return null;
+  function handleAlreadyLogged () {
+    if (localStorage.getItem('token')) return router.push('/dashboard/home/')
+    return null
   }
 
   useEffect(() => {
-    handleAlreadyLogged();
-  });
+    handleAlreadyLogged()
+  })
 
-  async function doLogin() {
-    const { response, error, data } = await SignInResource.login(userState);
-    if (error) throw new ErrorAPI(response);
-    return data || {};
+  async function doLogin () {
+    const { response, error, data } = await SignInResource.login(userState)
+    if (error) throw new ErrorAPI(response)
+    return data || {}
   }
 
-  async function loginHandler() {
+  async function loginHandler () {
     try {
-      openLoading();
-      const { token } = await doLogin();
-      setSnackbar({ message: 'Logado com sucesso!', status: 'success' });
-      localStorage.setItem('token', token);
-      return await router.push('/dashboard/home/');
+      setLoading(true)
+      const { token } = await doLogin()
+      setSnackbar({ message: 'Logado com sucesso!', status: 'success' })
+      localStorage.setItem('token', token)
+      return await router.push('/dashboard/home/')
     } catch (e) {
-      return setSnackbar({ message: e.message, status: 'error' });
+      return setSnackbar({ message: e.message, status: 'error' })
     } finally {
-      closeLoading();
+      setLoading(false)
     }
   }
   return {
     loginHandler,
-    setUser,
-  };
-};
+    setUser
+  }
+}
 
-export default loginController;
+export default loginController

@@ -1,6 +1,4 @@
-import React from 'react';
-
-import useDataTableController from './dataTableController';
+import React from 'react'
 
 // interface IDataTable {
 //   headers: Array<IHeaders>;
@@ -12,9 +10,7 @@ import useDataTableController from './dataTableController';
 //   value: String;
 // }
 
-function DataTable({ headers, data }: any) {
-  useDataTableController({ headers, data });
-
+function DataTable ({ headers, data }: any) {
   return (
     <div className="flex  rounded-lg bg-gray-200 shadow-lg content-around">
       {headers.map((header: { name: string; value: string | number }) => (
@@ -33,7 +29,7 @@ function DataTable({ headers, data }: any) {
         </div>
       ))}
     </div>
-  );
+  )
 }
 
-export default DataTable;
+export default DataTable

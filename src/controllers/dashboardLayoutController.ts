@@ -1,51 +1,56 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { useRouter } from 'next/router'
 
-import { useLoadingContext, useUserContext } from '../context/user'
-import UserResource from '../resources/UserResource'
+import { useUserContext } from '../context/user'
+import PersonResource from '../resources/PersonResource'
+import { useLoadingContext } from '../context/loadingContext'
 
 const dashboardLayoutController = () => {
   const { setUser, user } = useUserContext()
-  const { openLoading, closeLoading, loading } = useLoadingContext()
+  const { setLoading, loading } = useLoadingContext()
   const router = useRouter()
 
-  const routes = [{ name: 'Home', url: '/dashboard/home' }, { name: 'Imagens', url: '/dashboard/images' }]
-  const adminRoutes = [
-    { name: 'Home', url: '/dashboard/home' },
-    { name: 'Gerenciar usuários', url: '/dashboard/manage_users' }
-  ]
   const verifyAuth = () => {
     if (!localStorage.getItem('token')) return router.push('/')
     return null
   }
 
   async function getUser () {
-    const { error, data } = await UserResource.find(0)
+    const { error, data } = await PersonResource.find()
     if (error) return router.push('/logout')
-    return setUser((oldValue: any) => ({ ...oldValue, ...data }))
+    return setUser({ id: data.id, isAdmin: data.type === 'admin', name: data.name, email: data.email })
   }
+
   async function mountHandler () {
     try {
-      openLoading()
-      await verifyAuth()
+      if (user.id) return
+      setLoading(true)
+      verifyAuth()
       await getUser()
     } finally {
-      closeLoading()
+      setLoading(false)
     }
   }
 
-  function decideRoutes (): Array<any> {
-    if (loading.active) return []
-    return user.isAdmin ? adminRoutes : routes
-  }
+  const routes = useMemo(() => {
+    if (loading) return []
+    if (user.isAdmin) {
+      return [
+        { name: 'Home', url: '/dashboard/home' },
+        { name: 'Gerenciar usuários', url: '/dashboard/manage_users' },
+        { name: 'Logs', url: '/dashboard/logs' }
+      ]
+    }
+    return [{ name: 'Home', url: '/dashboard/home' }, { name: 'Imagens', url: '/dashboard/images' }]
+  }, [user.isAdmin, loading])
 
   useEffect(() => {
     mountHandler()
   }, [])
 
   return {
-    decideRoutes,
+    routes,
     router
   }
 }

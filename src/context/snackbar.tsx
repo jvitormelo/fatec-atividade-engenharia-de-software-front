@@ -1,33 +1,42 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, Dispatch, ReactNode, useCallback, useContext, useState } from 'react'
 
-const SnackbarContext = createContext({})
-const SnackbarProvider = ({ children }: any) => {
-  const [state, setState] = useState({ active: false, status: '', message: '' })
+type TSnackbar = {
+  active: boolean, status: 'success' | 'error', message: string
+}
+
+interface ISnackbar {
+  state: TSnackbar,
+  setState: Dispatch<React.SetStateAction<TSnackbar>>
+}
+
+const SnackbarContext = createContext<ISnackbar>({
+  state: { active: false, status: 'success', message: '' },
+  setState: () => null
+})
+const SnackbarProvider = ({ children }: { children: ReactNode }) => {
+  const [state, setState] = useState<TSnackbar>({ active: false, status: 'success', message: '' })
 
   return (
     <SnackbarContext.Provider value={{ state, setState }}>{children}</SnackbarContext.Provider>
   )
 }
 export const useSnackbarContext = () => {
-  // @ts-ignore
   const { state, setState } = useContext(SnackbarContext)
-
-  function setSnackbar ({ message = '', status = '' }) {
-    setState((previousValue: any) => ({
+  const setSnackbar = useCallback(({ message = '', status = 'success' as 'success' | 'error' }) => {
+    setState((previousValue) => ({
       ...previousValue,
       message,
       status,
       active: true
     }))
     setTimeout(() => {
-      setState((previousValue: any) => ({
+      setState((previousValue) => ({
         ...previousValue,
         message: '',
-        status: '',
         active: false
       }))
-    }, 2000)
-  }
+    }, 1500)
+  }, [state])
 
   return {
     setSnackbar,

@@ -1,11 +1,12 @@
-import React from 'react';
+import React from 'react'
 
-import useLoginController from '../../controllers/loginController';
-import { Meta } from '../../layout/Meta';
-import { Main } from '../../templates/Main';
+import useLoginController from '../../controllers/loginController'
+import { Meta } from '../../layout/Meta'
+import { Main } from '../../templates/Main'
 
 const Login = () => {
-  const { setUser, loginHandler } = useLoginController();
+  const { setUser, loginHandler } = useLoginController()
+
   return (
     <Main meta={<Meta title="Sign In" description="Loga aqui" />}>
       <div className="bg-gray-200">
@@ -35,8 +36,8 @@ const Login = () => {
             <form
               className="mt-12"
               onSubmit={async (event) => {
-                event.preventDefault();
-                await loginHandler();
+                event.preventDefault()
+                await loginHandler()
               }}
             >
               <div>
@@ -68,7 +69,7 @@ const Login = () => {
         </div>
       </div>
     </Main>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

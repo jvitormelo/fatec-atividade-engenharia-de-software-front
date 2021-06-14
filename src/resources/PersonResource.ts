@@ -1,15 +1,9 @@
 import AbstractResource from './AbstractResource'
 
-interface Login {
-  email: string;
-  password: string;
-  type?: 'admin' | 'user'
-}
-
-class SignInResource extends AbstractResource {
-  async login (payload: Login) {
+class PersonResource extends AbstractResource {
+  async find () {
     try {
-      const response = await this.api.post('/public/login', payload)
+      const response = await this.api.get('/persons')
       return {
         error: false,
         data: response?.data?.response || {},
@@ -24,5 +18,4 @@ class SignInResource extends AbstractResource {
     }
   }
 }
-
-export default new SignInResource()
+export default new PersonResource()
