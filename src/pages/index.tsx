@@ -21,8 +21,7 @@ const Index = () => {
       )}
     >
       <Navbar openCreateAccount={() => setState((values) => ({ ...values, open: true }))} />
-      <div className='flex min-h-screen bg-dark-surface p-4 md:p-8 lg:p-8 flex-col '>
-
+      <div className='flex h-[100vh] p-4 md:p-8 lg:p-8 flex-col '>
         <span className='flex justify-center text-2xl md:text-3xl lg:text-3xl text-primary-dark text-center'>Atividade de Laboratório de Engenharia de Software</span>
         <img
           className='max-h-[10rem] max-w-[30.23rem] mx-auto my-8 rounded-xl'

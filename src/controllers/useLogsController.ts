@@ -11,19 +11,22 @@ type requestLog = {
   source:string
   headers:{},
 }
+export type TLogs = {
+  id: number, userId: number, userType: string,
+  body: requestLog,
+  createdAt: Date,
+}
 
 interface ILogs {
-  logs: {
-    id: number, userId: number, userType: string,
-    body: requestLog,
-    createdAt: Date,
-  }[],
+  logs: TLogs[],
+  search: string,
+  authentication: number,
 
 }
 
 export const useLogsController = () => {
   const [pagination, setPagination] = useState({ page: 1, limit: 10 })
-  const [state, setState] = useState<ILogs>({ logs: [] })
+  const [state, setState] = useState<ILogs>({ logs: [], search: '', authentication: 0 })
   const mountHandler = useCallback(async () => {
     const { data } = await LogsResource.index()
     setState((values) => ({ ...values, logs: data }))
@@ -47,6 +50,7 @@ export const useLogsController = () => {
     state,
     handlePagination,
     startAndLimit,
-    pagination
+    pagination,
+    setState
   }
 }

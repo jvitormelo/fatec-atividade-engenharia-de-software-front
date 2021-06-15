@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 export const Navbar = ({ openCreateAccount }: {openCreateAccount: () => void}) => {
   const router = useRouter()
   return (
-    <div className='flex bg-light-onSurfacePrimary  p-2 sticky top-0 z-30'>
+    <div className='flex bg-[#eee] p-2 sticky top-0 z-30'>
       <div className='flex flex-1 max-w-[90%]  my-auto  justify-between'>
         <div>
           <img
