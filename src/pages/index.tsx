@@ -44,13 +44,13 @@ const Index = () => {
                 name='Tailwind' description={'Framework de CSS para fazer a estilização.'} />
               <TechCard
                 img='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Nextjs-logo.svg/1200px-Nextjs-logo.svg.png'
-                name='NextJS' description='Framework de React para produção.' />
+                name='Next' description='Framework de React para produção.' />
             </div>
           </div>
           <div>
             <div className='flex justify-center text-3xl mt-8 md:mt-0 lg:mt-0 xl:mt-0 font-bold'>Back</div>
             <div className='flex flex-col items-center'>
-              <TechCard img='https://cdn.iconscout.com/icon/free/png-512/node-js-1-1174935.png' name='NodeJS'
+              <TechCard img='https://cdn.iconscout.com/icon/free/png-512/node-js-1-1174935.png' name='Node'
                         description={'Runtime de JS que possibilita o JS ser rodado em server.'} />
               <TechCard img='https://expressjs.com/images/express-facebook-share.png'
                         description='Framework de NodeJS para criação de API' name='Express' />
