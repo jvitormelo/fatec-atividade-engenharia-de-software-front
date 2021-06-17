@@ -60,7 +60,9 @@ const dashboardLayoutController = () => {
 
   return {
     routes,
-    router
+    router,
+
+    firstLoading
   }
 }
 

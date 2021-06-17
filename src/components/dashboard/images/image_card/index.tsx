@@ -10,7 +10,7 @@ export const ImageCard = ({ image, removeImageHandler }: { image: TImageCard, re
       </div>
       <div className="flex flex-grow-1 md:flex-grow-0 lg:flex-grow-0 lg:flex-none ">
       <img alt={'ImageCardPreview'} src={image.url}
-           className='flex lg:h-[250px] lg:max-w-[250px] rounded-xl' />
+           className='flex rounded-xl' />
       </div>
     </div>
   )

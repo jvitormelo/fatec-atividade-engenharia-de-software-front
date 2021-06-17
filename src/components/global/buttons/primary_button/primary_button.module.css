@@ -1,9 +1,9 @@
 
 .primary {
   @apply
-  flex bg-button-primary text-white font-bold flex-grow justify-center p-4 rounded-lg focus:outline-none
+  flex bg-text-primary text-white font-bold flex-grow justify-center p-4 rounded-lg focus:outline-none
   items-center
-  hover:bg-text-primary
+  hover:bg-button-primary
 }
 
 .outlined {

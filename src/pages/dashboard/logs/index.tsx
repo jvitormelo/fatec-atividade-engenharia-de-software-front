@@ -43,7 +43,7 @@ const Logs = () => {
     ))
   }, [paginatedRows])
 
-  if (loading) return <></>
+  if (loading || state.logs.length === 0) return null
 
   return (
     <div className='flex flex-1 flex-col'>
