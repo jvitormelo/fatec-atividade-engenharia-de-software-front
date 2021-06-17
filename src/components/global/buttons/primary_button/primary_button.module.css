@@ -1,0 +1,17 @@
+
+.primary {
+  @apply
+  flex bg-button-primary text-white font-bold flex-grow justify-center p-4 rounded-lg focus:outline-none
+  items-center
+  hover:bg-text-primary
+}
+
+.outlined {
+  @apply flex bg-white
+  border-2 border-solid border-button-primary
+  items-center
+  flex-grow justify-center p-4 rounded-lg focus:outline-none
+  hover:bg-[#eff]
+
+}
+

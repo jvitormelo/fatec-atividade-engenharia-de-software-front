@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import { DefaultInput } from '../../../components/global/input/default_input'
+import { TextField } from '../../../components/global/input/default_input'
 import { PrimaryButton } from '../../../components/global/buttons/primary_button'
 import { useAdminLoginController } from '../../../controllers/useAdminLoginController'
 
@@ -17,25 +17,24 @@ const AdminLogin = () => {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<{ email: string, password: string }>({ resolver: yupResolver(adminLoginSchema) })
+  } = useForm<{ email: string, password: string }>({ resolver: yupResolver(adminLoginSchema), mode: 'all' })
 
   return (
     <div className='min-h-screen flex flex-grow-1 items-center justify-center'>
-
-      <div className='p-8 flex  shadow-xl min-w-[30vw] min-h-[400px] '>
+      <div className='p-8 flex  shadow-xl min-w-[30vw] min-h-[400px]'>
         <form className='flex flex-1 flex-col' onSubmit={handleSubmit(handleLogin)}>
           <span className='text-3xl text-center mb-4 '>Japones Systems</span>
 
-          <DefaultInput
+          <TextField
             register={register('email')}
             inputProps={{ placeholder: 'Email', inputMode: 'email' }}
             errors={errors.email?.message}
           />
 
-          <DefaultInput
+          <TextField
             className='mt-4'
             register={register('password')}
-            inputProps={{ placeholder: 'Senha', inputMode: 'password' }}
+            inputProps={{ placeholder: 'Senha', inputMode: 'password', type: 'password' }}
             errors={errors.password?.message}
           />
 

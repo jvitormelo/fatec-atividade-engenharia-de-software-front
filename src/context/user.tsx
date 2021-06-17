@@ -20,7 +20,7 @@ const User = createContext<IUserContext>({
 export const useUserContext = () => {
   const { state, setState } = useContext(User)
 
-  const setUser = useCallback((user: Partial<TUser>) => {
+  const setUser = useCallback((user : Partial<TUser> = { name: '', email: '', id: 0, isAdmin: false }) => {
     setState((values) => ({ ...values, ...user }))
   }, [state])
 

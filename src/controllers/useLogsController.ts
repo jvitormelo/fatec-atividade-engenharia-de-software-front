@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import LogsResource from '../resources/LogsResource'
+import { useLoadingContext } from '../context/loadingContext'
+import { useProtectedPage } from '../hooks/useProtectedPage'
 
 type requestLog = {
   body: {}
@@ -25,11 +27,15 @@ interface ILogs {
 }
 
 export const useLogsController = () => {
+  const { routeHandler } = useProtectedPage()
+  const { setLoading, loading } = useLoadingContext()
   const [pagination, setPagination] = useState({ page: 1, limit: 10 })
   const [state, setState] = useState<ILogs>({ logs: [], search: '', authentication: 0 })
   const mountHandler = useCallback(async () => {
+    setLoading(true)
     const { data } = await LogsResource.index()
     setState((values) => ({ ...values, logs: data }))
+    setLoading(false)
   }, [])
 
   const startAndLimit = useMemo(() => {
@@ -44,6 +50,7 @@ export const useLogsController = () => {
   }, [pagination, setPagination])
 
   useEffect(() => {
+    routeHandler()
     mountHandler()
   }, [])
   return {
@@ -51,6 +58,7 @@ export const useLogsController = () => {
     handlePagination,
     startAndLimit,
     pagination,
-    setState
+    setState,
+    loading
   }
 }

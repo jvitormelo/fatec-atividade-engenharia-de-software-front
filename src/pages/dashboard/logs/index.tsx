@@ -3,10 +3,10 @@ import DashboardLayout from '../../../layout/DashboardLayout'
 import { TLogs, useLogsController } from '../../../controllers/useLogsController'
 import { useDate } from '../../../services/converters'
 import { PrimaryButton } from '../../../components/global/buttons/primary_button'
-import { DefaultInput } from '../../../components/global/input/default_input'
+import { TextField } from '../../../components/global/input/default_input'
 
 const Logs = () => {
-  const { state, setState, handlePagination, startAndLimit: { start, offSet }, pagination } = useLogsController()
+  const { state, loading, setState, handlePagination, startAndLimit: { start, offSet }, pagination } = useLogsController()
   const isInSearch = useCallback(({ userType, userId }: TLogs) => {
     return String(userId).includes(state.search) || userType.includes(state.search)
   }, [state])
@@ -24,29 +24,29 @@ const Logs = () => {
 
   const rows = useMemo(() => {
     return paginatedRows.map((log) => (
-      <tr key={log.id} className='border-2 border-[#eee]  text-center'>
-        <td className='bg-green-500'>{log.id}</td>
-        <td>{log.userId}</td>
-        <td>{log.userType}</td>
-        <td>
+      <tr key={log.id} className='border-2 border-[#eee] text-center'>
+        <td className="border border-white">{log.id}</td>
+        <td className="border border-white">{log.userId}</td>
+        <td className="border border-white">{log.userType}</td>
+        <td className="border border-white">
           <div className='flex flex-col '>
             <span> OS: {log.body.os}</span>
             <span> browser: {log.body.browser}</span>
-
             <div>
               <span> method: {log.body.method}</span><span> {log.body.path}</span>
             </div>
             <span> platform: {log.body.platform}</span>
           </div>
-
         </td>
         <td>{useDate(log.createdAt)}</td>
       </tr>
     ))
   }, [paginatedRows])
+
+  if (loading) return <></>
+
   return (
     <div className='flex flex-1 flex-col'>
-
       <div className='flex mb-4 justify-end items-center  '>
         <div className='mt-auto'>
           Autenticação
@@ -66,7 +66,7 @@ const Logs = () => {
             </div>
           </div>
         </div>
-        <DefaultInput
+        <TextField
 
           onChange={(event) => setState((value) => ({ ...value, search: event.target.value }))} label={'Pesquisar'}
           inputProps={{ placeholder: 'Pesquisar por tipo de usuario, e id' }} />
@@ -74,10 +74,10 @@ const Logs = () => {
       <div>
 
       </div>
-      <table className={' min-w-[100%]'}>
+      <table className='min-w-[100%] rounded-lg border-collapse'>
         <thead>
         <tr>
-          <th>Id</th>
+          <th >Id</th>
           <th>userId</th>
           <th>userType</th>
           <th className='w-4/12'>Body</th>
@@ -108,4 +108,5 @@ const Logs = () => {
 }
 
 Logs.layout = DashboardLayout
+
 export default Logs

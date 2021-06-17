@@ -24,9 +24,10 @@ export const useAdminLoginController = () => {
       setLoading(true)
       const user = await doLogin(values)
       localStorage.setItem('token', user.token)
-      setUser({ email: values.email, isAdmin: true })
+
+      setUser({ name: user.user?.person?.name || '', email: values.email, isAdmin: true })
+      await router.push('/dashboard/home')
       setSnackbar({ message: 'Logado com sucesso', status: 'success' })
-      return router.push('/dashboard/home')
     } catch (e) {
       return setSnackbar({ message: e?.message || 'Problema ao logar', status: 'error' })
     } finally {

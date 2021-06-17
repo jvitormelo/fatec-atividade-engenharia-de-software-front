@@ -25,7 +25,7 @@ const loginController = () => {
 
   useEffect(() => {
     handleAlreadyLogged()
-  })
+  }, [])
 
   async function doLogin () {
     const { response, error, data } = await SignInResource.login(userState)

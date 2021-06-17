@@ -9,7 +9,7 @@ interface IDefaultInput {
   onChange?: (e:React.ChangeEvent<HTMLInputElement>) => any
 }
 
-export const DefaultInput = ({ errors = '', register, inputProps, className, label, onChange }: IDefaultInput) => {
+export const TextField = ({ errors = '', register, inputProps, className, label, onChange }: IDefaultInput) => {
   return (
     <div className={`flex flex-col ${className}`}>
       <div>{label}</div>

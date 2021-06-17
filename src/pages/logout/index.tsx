@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { useRouter } from 'next/router'
+import { useUserContext } from '../../context/user'
 
 const Logout = () => {
+  const { setUser } = useUserContext()
   const router = useRouter()
 
   useEffect(() => {
     localStorage.removeItem('token')
-    router.push('/').then()
+    setUser()
+    router.push('/')
   }, [])
-
-  return <></>
+  return null
 }
 
 export default Logout

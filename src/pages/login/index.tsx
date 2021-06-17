@@ -9,8 +9,8 @@ const Login = () => {
 
   return (
     <Main meta={<Meta title="Sign In" description="Loga aqui" />}>
-      <div className="bg-gray-200">
-        <div className="flex flex-wrap w-11/12 h-full min-h-screen justify-between items-center container mx-auto">
+      <div className="bg-gray-200 overflow-hidden max-h-[100vh]  ">
+        <div className="flex flex-wrap w-11/12 h-full  min-h-screen justify-between items-center container mx-auto">
           <div className="flex-shrink w-12/12 lg:w-6/12 md:w-4/12">
             <div>
               <h1 className="text-6xl text-gray-800 font-bold">Lorem ipsum.</h1>

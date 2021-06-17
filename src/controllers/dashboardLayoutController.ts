@@ -38,7 +38,6 @@ const dashboardLayoutController = () => {
     if (user.isAdmin) {
       return [
         { name: 'Home', url: '/dashboard/home' },
-        { name: 'Gerenciar usuários', url: '/dashboard/manage_users' },
         { name: 'Logs', url: '/dashboard/logs' }
       ]
     }
