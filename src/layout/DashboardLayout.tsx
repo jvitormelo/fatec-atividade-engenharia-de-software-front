@@ -10,11 +10,10 @@ const DashboardLayout = ({ children }: any) => {
   return (
     <Main meta={<Meta title='Dashboard' description='Gerenciar' />}>
       <div className='min-h-screen flex bg-background-primary'>
-        <div className='w-2/12'><Sidebar routes={routes} /></div>
-        <div className='flex flex-grow p-8 '>
-          <div className="bg-background-secondary flex flex-1 rounded-lg p-8 text-white">{children}</div>
+         <div className='w-2/12'><Sidebar routes={routes} /></div>
+        <div className='flex flex-grow p-8 w-10/12'>
+          <div className="bg-background-secondary  flex flex-1 rounded-lg p-8 text-white">{children}</div>
         </div>
-
       </div>
     </Main>
   )

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { useRouter } from 'next/router'
 
@@ -8,7 +8,8 @@ import { useLoadingContext } from '../context/loadingContext'
 
 const dashboardLayoutController = () => {
   const { setUser, user } = useUserContext()
-  const { setLoading, loading } = useLoadingContext()
+  const [firstLoading, setFirstLoading] = useState(true)
+  const { setLoading } = useLoadingContext()
   const router = useRouter()
 
   const verifyAuth = () => {
@@ -30,19 +31,28 @@ const dashboardLayoutController = () => {
       await getUser()
     } finally {
       setLoading(false)
+      setFirstLoading(false)
     }
   }
 
   const routes = useMemo(() => {
-    if (loading) return []
+    if (firstLoading) return []
     if (user.isAdmin) {
       return [
-        { name: 'Home', url: '/dashboard/home' },
-        { name: 'Logs', url: '/dashboard/logs' }
+        { name: 'Home', url: '/dashboard/home', icon: '😂' },
+        { name: 'Logs', url: '/dashboard/logs', icon: '😅' }
       ]
     }
-    return [{ name: 'Home', url: '/dashboard/home' }, { name: 'Imagens', url: '/dashboard/images' }]
-  }, [user.isAdmin, loading])
+    return [
+      { name: 'Home', url: '/dashboard/home', icon: '😂' },
+      {
+        name: 'Imagens',
+        url: '',
+        icon: '😁',
+        nested: [
+          { name: 'Listar', url: '/dashboard/images', icon: '😍' }, { name: 'Nova', url: '/dashboard/images/new', icon: '🥰' }]
+      }]
+  }, [user.isAdmin, firstLoading])
 
   useEffect(() => {
     mountHandler()

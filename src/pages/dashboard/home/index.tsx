@@ -14,7 +14,6 @@ const DashboardHome = () => {
         <div>
           Você <span className="text-xl font-bold text-primary-dark">{user.isAdmin ? 'é' : 'não é'}</span>   administrador
         </div>
-
       </div>
     </div>
   )

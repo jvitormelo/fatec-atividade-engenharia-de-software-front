@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import ImagesResource from '../resources/ImagesResource'
 import { toBase64 } from '../services/fileConvertes'
 import { useLoadingContext } from '../context/loadingContext'
+import { useSnackbarContext } from '../context/snackbar'
 
 export type TImageCard = {
   id: number,
@@ -14,35 +15,20 @@ export type TImageCard = {
 interface IImagesController {
   file: undefined | File,
   blob:string,
-  images: TImageCard[]
+
 }
 
 export const useImagesController = () => {
+  const { setLoading } = useLoadingContext()
+  const { setSnackbar } = useSnackbarContext()
   const [state, setState] = useState<IImagesController>({
     file: undefined,
-    blob: '',
-    images: []
+    blob: ''
   })
 
   const setStateHandler = useCallback((payload : Partial<IImagesController> = {}) => {
     setState((value) => ({ ...value, ...payload }))
   }, [state])
-  const { setLoading } = useLoadingContext()
-
-  const mountHandler = useCallback(async () => {
-    try {
-      setLoading(true)
-      const { data } = await ImagesResource.index()
-      setStateHandler({ images: data })
-    } catch (e) {
-      console.error(e)
-    } finally {
-      setLoading(false)
-    }
-  }, [])
-  useEffect(() => {
-    mountHandler()
-  }, [])
 
   const handleImageUpload = useCallback((file: File | undefined) => {
     if (!file) return null
@@ -64,30 +50,18 @@ export const useImagesController = () => {
     }
   }, [])
 
-  const removeImageHandler = useCallback(async (id: number) => {
-    try {
-      setLoading(true)
-      await ImagesResource.destroy(id)
-      setStateHandler({ images: state.images.filter((image) => image.id !== id) })
-    } catch (e) {
-      console.error(e)
-    } finally {
-      setLoading(false)
-    }
-  }, [state])
-
   const uploadImageHandler = useCallback(async () => {
     try {
       setLoading(true)
       if (!state.file) return null
       const base64 = await toBase64(state.file)
-
-      const { data } = await ImagesResource.create({
+      await ImagesResource.create({
         title: 'Teste Mockado',
         description: 'Descrição Mockada',
         base64
       })
-      return setStateHandler({ images: [...state.images, data], file: undefined, blob: '' })
+      setStateHandler({ file: undefined, blob: '' })
+      return setSnackbar({ message: 'Imagem cadastrada com successo!', status: 'success' })
     } catch (e) {
       console.error(e)
     } finally {
@@ -100,8 +74,7 @@ export const useImagesController = () => {
     state,
     handleImageUpload,
     setStateHandler,
-    uploadImageHandler,
-    removeImageHandler
+    uploadImageHandler
 
   }
 }
