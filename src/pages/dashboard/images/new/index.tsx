@@ -15,14 +15,14 @@ const Images = () => {
               ? <div className='flex-col flex '>
                 <div className='flex justify-center'>
                   <button onClick={() => setStateHandler({ file: undefined, blob: '' })}
-                          className='mx-auto mb-3 px-3 py-1 bg-error text-white  rounded-lg focus:outline-none'>Remover
+                          className='lg:mx-auto mr-auto mb-3 px-3 py-1 bg-error text-white  rounded-lg focus:outline-none'>Remover
                   </button>
                   <button
-                    className='mb-3 px-3 py-1 bg-success hover:bg-primary-dark text-black  rounded-lg focus:outline-none'
+                    className='mb-3 px-3 py-1 text-white bg-success hover:bg-primary-dark text-black  rounded-lg focus:outline-none'
                     onClick={uploadImageHandler}>Salvar
                   </button>
                 </div>
-                <img alt={'preview'} className='min-w-[10rem] mx-auto max-w-[600px] max-h-[800px] aspect-w-1 aspect-h-2'
+                <img alt={'preview'} className='min-w-[10rem] mx-auto max-w-[200px] lg:max-w-[600px] max-h-[800px] aspect-w-1 aspect-h-2'
                      src={state.blob} />
               </div>
               : <>

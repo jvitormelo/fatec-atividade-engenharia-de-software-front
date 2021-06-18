@@ -9,7 +9,7 @@ interface INestedRoute {
 }
 
 export const NestedRoute = ({ route, activeRoute }:INestedRoute) => {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const toggleOpen = useCallback(() => {
     setOpen((values) => !values)
   }, [open])

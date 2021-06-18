@@ -6,7 +6,7 @@ import { useUserContext } from '../../../context/user'
 const DashboardHome = () => {
   const { user } = useUserContext()
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col ">
       <div>
         <div className="text-xl">
           Bem vindo <span className="text-primary-dark text-3xl">{user.name}</span>

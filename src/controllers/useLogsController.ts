@@ -19,10 +19,11 @@ export type TLogs = {
   createdAt: Date,
 }
 
-interface ILogs {
+export interface ILogs {
   logs: TLogs[],
   search: string,
   authentication: number,
+  userType: number
 
 }
 
@@ -30,7 +31,7 @@ export const useLogsController = () => {
   const { routeHandler } = useProtectedPage()
   const { setLoading, loading } = useLoadingContext()
   const [pagination, setPagination] = useState({ page: 1, limit: 10 })
-  const [state, setState] = useState<ILogs>({ logs: [], search: '', authentication: 0 })
+  const [state, setState] = useState<ILogs>({ logs: [], search: '', authentication: 0, userType: 0 })
   const mountHandler = useCallback(async () => {
     setLoading(true)
     const { data } = await LogsResource.index()
@@ -45,6 +46,10 @@ export const useLogsController = () => {
     }
   }, [pagination])
 
+  useEffect(() => {
+    setPagination((values) => ({ ...values, page: 1 }))
+  }, [state])
+
   const handlePagination = useCallback((page) => {
     setPagination((values) => ({ ...values, page: values.page + page }))
   }, [pagination, setPagination])
@@ -53,12 +58,32 @@ export const useLogsController = () => {
     routeHandler()
     mountHandler()
   }, [])
+
+  const isInSearch = useCallback(({ userId }: TLogs) => {
+    const { search } = state
+    return String(userId).includes(search)
+  }, [state])
+
+  const filteredRows = useMemo(() => {
+    let logs = [...state.logs]
+    if (state.authentication) logs = logs.filter((log) => state.authentication === 1 ? log.userId > 0 : log.userId === 0)
+    if (state.userType) logs = logs.filter((log) => state.userType === 1 ? log.userType === 'admin' : log.userType === 'user')
+    if (state.search) logs = logs.filter((log) => isInSearch(log))
+    return logs
+  }, [state])
+
+  const paginatedRows = useMemo(() => {
+    const { start, offSet } = startAndLimit
+    return filteredRows.filter((_log, index) => index >= start && index < offSet)
+  }, [startAndLimit, state, filteredRows])
   return {
     state,
     handlePagination,
     startAndLimit,
     pagination,
     setState,
-    loading
+    loading,
+    paginatedRows,
+    filteredRows
   }
 }
