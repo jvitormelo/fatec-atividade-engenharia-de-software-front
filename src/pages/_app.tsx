@@ -1,23 +1,37 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react'
 
-import { AppProps } from 'next/app';
+// eslint-disable-next-line import/order
+import { AppProps } from 'next/app'
 
-import '../styles/main.css';
+import '../styles/main.css'
 
-import { Loading } from '../components/global/loading';
-import Snackbar from '../components/global/snackbar';
-import SnackbarProvider from '../context/snackbar';
-import UserProvider from '../context/user';
+import { Loading } from '../components/global/loading'
+import Snackbar from '../components/global/snackbar'
+import SnackbarProvider from '../context/snackbar'
+import UserProvider from '../context/user'
+import LoadingProvider from '../context/loadingContext'
 
-const MyApp = ({ Component, pageProps }: AppProps) => (
-  <UserProvider>
-    <SnackbarProvider>
-      <Loading />
-      <Snackbar />
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <Component {...pageProps} />
-    </SnackbarProvider>
-  </UserProvider>
-);
+// eslint-disable-next-line react/prop-types
+const DefaultLayout: FunctionComponent = ({ children }) => <>{children}</>
 
-export default MyApp;
+const MyApp = ({ Component, pageProps }: AppProps) => {
+  // @ts-ignore
+  const Layout = Component?.layout || DefaultLayout
+
+  return (
+    <LoadingProvider>
+      <UserProvider>
+        <SnackbarProvider>
+          <Loading />
+          <Snackbar />
+          <Layout>
+            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+            <Component {...pageProps} />
+          </Layout>
+        </SnackbarProvider>
+      </UserProvider>
+    </LoadingProvider>
+  )
+}
+
+export default MyApp

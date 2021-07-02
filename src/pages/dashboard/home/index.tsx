@@ -1,29 +1,25 @@
-import React from 'react';
+import React from 'react'
 
-import { AiOutlineRight } from 'react-icons/ai';
+import DashboardLayout from '../../../layout/DashboardLayout'
+import { useUserContext } from '../../../context/user'
 
-import Dashboard from '../index';
-
-const DashboardHome = () => (
-  <Dashboard>
-    <div className="flex flex-1 flex-col">
+const DashboardHome = () => {
+  const { user } = useUserContext()
+  return (
+    <div className="flex flex-1 flex-col ">
       <div>
-        <div className="text-2xl mb-2">Ultimas matérias</div>
-        <div className="lg:grid grid-cols-4 gap-3">
-          {['Programação', 'Matemática', 'teste'].map((item) => (
-            <div
-              key={item}
-              className="p-4 bg-white animate-2s duration-150 cursor-pointer  hover:translate-y- transform hover:translate-y-1  shadow-lg hover:bg-gray-100 min-w-[10.23rem] flex justify-between items-center rounded-lg"
-            >
-              <div className="font-bold">{item}</div>
-              <div>
-                <AiOutlineRight />
-              </div>
-            </div>
-          ))}
+        <div className="text-xl">
+          Bem vindo <span className="text-primary-dark text-3xl">{user.name}</span>
+          <div>ID: {user.id}</div>
+          <div> email: {user.email}!</div>
+        </div>
+        <div>
+          Você <span className="text-xl font-bold text-primary-dark">{user.isAdmin ? 'é' : 'não é'}</span>   administrador
         </div>
       </div>
     </div>
-  </Dashboard>
-);
-export default DashboardHome;
+  )
+}
+
+DashboardHome.layout = DashboardLayout
+export default DashboardHome

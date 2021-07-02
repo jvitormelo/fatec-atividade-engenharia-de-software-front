@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react'
 
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
+import { useUserContext } from '../../context/user'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function Logout() {
-  const router = useRouter();
+const Logout = () => {
+  const { setUser } = useUserContext()
+  const router = useRouter()
 
   useEffect(() => {
-    localStorage.removeItem('token');
-    router.push('/').then();
-  }, []);
-  return <div />;
+    localStorage.removeItem('token')
+    setUser()
+    router.push('/')
+  }, [])
+  return null
 }
 
-export default Logout;
+export default Logout

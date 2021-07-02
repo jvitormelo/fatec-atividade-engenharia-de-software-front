@@ -1,59 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react'
 
-import { useRouter } from 'next/router';
-
-// @ts-ignore
-import { useSnackbarContext } from '../../context/snackbar';
-import { useLoadingContext } from '../../context/user';
-import { Meta } from '../../layout/Meta';
-import SignInResource from '../../resources/SignInResource';
-import ErrorAPI from '../../services/ErrorAPI';
-import { Main } from '../../templates/Main';
+import useLoginController from '../../controllers/loginController'
+import { Meta } from '../../layout/Meta'
+import { Main } from '../../templates/Main'
 
 const Login = () => {
-  const { setSnackbar } = useSnackbarContext();
-  const { openLoading, closeLoading } = useLoadingContext();
-  const router = useRouter();
-
-  function handleAlreadyLogged() {
-    if (localStorage.getItem('token')) return router.push('/dashboard/home/');
-    return null;
-  }
-
-  useEffect(() => {
-    handleAlreadyLogged();
-  });
-
-  const [userState, setUser] = useState({
-    email: '',
-    password: '',
-  });
-
-  async function login() {
-    const { response, error, data } = await SignInResource.login(userState);
-    if (error) throw new ErrorAPI(response);
-    return data || {};
-  }
-
-  async function handleLogin() {
-    try {
-      openLoading();
-      const { token } = await login();
-      setSnackbar({ message: 'Logado com sucesso!', status: 'success' });
-      // userContext.setUser((oldValue: any) => ({ ...oldValue, isAdmin: user.isAdmin }));
-      localStorage.setItem('token', token);
-      return await router.push('/dashboard/home/');
-    } catch (e) {
-      return setSnackbar({ message: e.message, status: 'error' });
-    } finally {
-      closeLoading();
-    }
-  }
+  const { setUser, loginHandler } = useLoginController()
 
   return (
-    <Main meta={<Meta title="Sign In" description="Loga aqui nessa bosta" />}>
-      <div className="bg-gray-200">
-        <div className="flex flex-wrap w-11/12 h-full min-h-screen justify-between items-center container mx-auto">
+    <Main meta={<Meta title="Sign In" description="Loga aqui" />}>
+      <div className="bg-gray-200 overflow-hidden max-h-[100vh]  ">
+        <div className="flex flex-wrap w-11/12 h-full  min-h-screen justify-between items-center container mx-auto">
           <div className="flex-shrink w-12/12 lg:w-6/12 md:w-4/12">
             <div>
               <h1 className="text-6xl text-gray-800 font-bold">Lorem ipsum.</h1>
@@ -78,9 +35,9 @@ const Login = () => {
             </div>
             <form
               className="mt-12"
-              onSubmit={(event) => {
-                event.preventDefault();
-                handleLogin();
+              onSubmit={async (event) => {
+                event.preventDefault()
+                await loginHandler()
               }}
             >
               <div>
@@ -112,7 +69,7 @@ const Login = () => {
         </div>
       </div>
     </Main>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

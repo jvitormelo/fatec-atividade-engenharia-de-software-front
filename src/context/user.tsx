@@ -1,51 +1,46 @@
-import React, { useContext, createContext, useState } from 'react';
+import React, { createContext, Dispatch, ReactNode, useCallback, useContext, useState } from 'react'
 
-const User = createContext({});
-
-export function useUserContext() {
-  // @ts-ignore
-  const { user, setUser } = useContext(User);
-
-  return {
-    user,
-    setUser,
-  };
-}
-export function useLoadingContext() {
-  // @ts-ignore
-  const { loading, setLoading } = useContext(User);
-  function openLoading() {
-    setLoading((oldValue: any) => ({ ...oldValue, active: true }));
-  }
-  function closeLoading() {
-    setLoading((oldValue: any) => ({ ...oldValue, active: false }));
-  }
-  return {
-    openLoading,
-    closeLoading,
-    loading,
-  };
+type TUser = {
+  isAdmin: boolean,
+  id:number,
+  name: string,
+  email: string
 }
 
-export default function UserProvider({ children }: any) {
-  const [user, setUser] = useState({
-    idAdmin: false,
+interface IUserContext {
+  state: TUser,
+  setState: Dispatch<React.SetStateAction<TUser>>
+}
+
+const User = createContext<IUserContext>({
+  state: { id: 0, email: '', isAdmin: false, name: '' },
+  setState: () => null
+})
+
+export const useUserContext = () => {
+  const { state, setState } = useContext(User)
+
+  const setUser = useCallback((user : Partial<TUser> = { name: '', email: '', id: 0, isAdmin: false }) => {
+    setState((values) => ({ ...values, ...user }))
+  }, [state])
+
+  return {
+    user: state,
+    setUser
+  }
+}
+
+const UserProvider = ({ children }: { children: ReactNode }) => {
+  const [state, setState] = useState({
+    id: 0,
+    isAdmin: false,
     name: '',
-  });
+    email: ''
+  })
 
-  const [loading, setLoading] = useState({ active: false });
-
-  return (
-    // @ts-ignore
-    <User.Provider
-      value={{
-        user,
-        setUser,
-        loading,
-        setLoading,
-      }}
-    >
-      {children}
-    </User.Provider>
-  );
+  return <User.Provider value={{ state, setState }}>
+    {children}
+  </User.Provider>
 }
+
+export default UserProvider

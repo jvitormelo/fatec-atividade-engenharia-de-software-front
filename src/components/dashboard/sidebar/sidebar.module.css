@@ -1,0 +1,24 @@
+
+
+.route {
+  @apply text-xl select-none flex justify-between text-white  hover:bg-background-secondary rounded-lg p-2 cursor-pointer
+  items-center
+}
+.selectRoute {
+  @apply text-xl select-none flex justify-between text-white  bg-background-secondary rounded-lg p-2 cursor-pointer
+  items-center
+}
+
+
+.logout {
+  @apply mt-auto text-xl hover:bg-background-secondary text-white cursor-pointer border border-white p-2 rounded-xl flex justify-between items-center
+}
+
+
+.selectedNestedRoute{
+  @apply ml-3 px-2 my-1 py-1 text-lg text-white flex justify-between bg-background-secondary rounded-lg cursor-pointer
+}
+.nestedRoute {
+  @apply ml-3 px-2 my-1 py-1 text-lg text-white flex justify-between  hover:bg-background-secondary rounded-lg  cursor-pointer
+}
+

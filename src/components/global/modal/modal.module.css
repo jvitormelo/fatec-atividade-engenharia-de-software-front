@@ -1,0 +1,23 @@
+/*.modal{*/
+/*  position: relative;*/
+/*  background-color: #fefefe;*/
+/*  margin: auto;*/
+/*  padding: 24px;*/
+/*  border: 1px solid #888;*/
+/*  width: 80%;*/
+/*  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);*/
+
+/*}*/
+
+.modal {
+  @apply relative bg-[#fefefe] m-auto rounded-lg  p-4 border-2 border-solid border-[#888]  shadow ;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+
+
+@keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
+}
